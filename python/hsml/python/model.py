@@ -38,7 +38,7 @@ class Model(Model):
         signature=None,
         training_dataset=None,
         input_example=None,
-        framework=None
+        framework=None,
     ):
         super().__init__(
             id,

@@ -22,10 +22,18 @@ class Engine:
         self._native_hdfs_api = native_hdfs_api.NativeHdfsApi()
 
     def mkdir(self, model_instance):
-        model_version_dir_hdfs = "/Projects/{}/Models/{}/{}".format(model_instance.project_name, model_instance.name, str(model_instance.version))
+        model_version_dir_hdfs = "/Projects/{}/Models/{}/{}".format(
+            model_instance.project_name,
+            model_instance.name,
+            str(model_instance.version),
+        )
         self._native_hdfs_api.mkdir(model_version_dir_hdfs)
         self._native_hdfs_api.chmod(model_version_dir_hdfs, "ug+rwx")
 
     def delete(self, model_instance):
-        model_version_dir_hdfs = "/Projects/{}/Models/{}/{}".format(model_instance.project_name, model_instance.name, str(model_instance.version))
+        model_version_dir_hdfs = "/Projects/{}/Models/{}/{}".format(
+            model_instance.project_name,
+            model_instance.name,
+            str(model_instance.version),
+        )
         self._native_hdfs_api.delete(model_version_dir_hdfs)

@@ -18,13 +18,11 @@ from hsml.utils.columnar_signature import ColumnarSignature
 from hsml.utils.tensor_signature import TensorSignature
 import numpy
 
+
 class ModelSignatureSpec:
     """Metadata object representing a model signature for a model."""
 
-    def __init__(
-            self,
-            data=None
-    ):
+    def __init__(self, data=None):
 
         if isinstance(data, numpy.ndarray):
             self.tensor_signature = self._convert_tensor_to_signature(data)

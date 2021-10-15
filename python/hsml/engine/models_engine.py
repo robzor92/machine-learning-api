@@ -97,9 +97,7 @@ class Engine:
 
             self._dataset_api.upload(signature_path, dataset_model_version_path)
             os.remove(signature_path)
-            model_instance.signature = (
-                dataset_model_version_path + "/signature.json"
-            )
+            model_instance.signature = dataset_model_version_path + "/signature.json"
         return model_instance
 
     def _copy_hopsfs_model(self, model_path, dataset_model_version_path, client):
@@ -151,11 +149,15 @@ class Engine:
 
         self._dataset_api.rm(unzipped_model_dir)
 
-    def _set_model_version(self, model_instance, dataset_models_root_path, dataset_model_path):
+    def _set_model_version(
+        self, model_instance, dataset_models_root_path, dataset_model_path
+    ):
         # Set model version if not defined
         if model_instance._version is None:
             current_highest_version = 0
-            for item in self._dataset_api.list(dataset_model_path, sort_by="NAME:desc")["items"]:
+            for item in self._dataset_api.list(dataset_model_path, sort_by="NAME:desc")[
+                "items"
+            ]:
                 _, file_name = os.path.split(item["attributes"]["path"])
                 try:
                     current_version = int(file_name)
@@ -165,36 +167,44 @@ class Engine:
                     pass
             model_instance._version = current_highest_version + 1
 
-        elif self._dataset_api.path_exists(dataset_models_root_path + "/" + model_instance._name + "/" + str(model_instance._version)):
-              raise ModelRegistryException(
-                  "Model with name {} and version {} already exists".format(
-                      model_instance._name, model_instance._version
-                  )
-              )
+        elif self._dataset_api.path_exists(
+            dataset_models_root_path
+            + "/"
+            + model_instance._name
+            + "/"
+            + str(model_instance._version)
+        ):
+            raise ModelRegistryException(
+                "Model with name {} and version {} already exists".format(
+                    model_instance._name, model_instance._version
+                )
+            )
         return model_instance
 
     def _build_registry_path(self, model_instance, artifact_path):
         models_path = None
         if model_instance.shared_registry_project is not None:
-          models_path = "{}::Models".format(model_instance.shared_registry_project)
+            models_path = "{}::Models".format(model_instance.shared_registry_project)
         else:
-          models_path = "Models"
+            models_path = "Models"
         return artifact_path.replace("Models", models_path)
 
     def save(self, model_instance, model_path, await_registration=480):
 
-        #Validate model path existence
+        # Validate model path existence
 
         _client = client.get_instance()
 
         is_shared_registry = model_instance.shared_registry_project is not None
 
         if is_shared_registry:
-          dataset_models_root_path = "{}::Models".format(model_instance.shared_registry_project)
-          model_instance._project_name = model_instance.shared_registry_project
+            dataset_models_root_path = "{}::Models".format(
+                model_instance.shared_registry_project
+            )
+            model_instance._project_name = model_instance.shared_registry_project
         else:
-          dataset_models_root_path = "Models"
-          model_instance._project_name = _client._project_name
+            dataset_models_root_path = "Models"
+            model_instance._project_name = _client._project_name
 
         if model_instance._training_metrics is not None:
             util.validate_metrics(model_instance._training_metrics)
@@ -209,7 +219,9 @@ class Engine:
         if not self._dataset_api.path_exists(dataset_model_path):
             self._dataset_api.mkdir(dataset_model_path)
 
-        model_instance = self._set_model_version(model_instance, dataset_models_root_path, dataset_model_path)
+        model_instance = self._set_model_version(
+            model_instance, dataset_models_root_path, dataset_model_path
+        )
 
         print(
             "Exporting model {} with version {}".format(
@@ -218,14 +230,20 @@ class Engine:
         )
 
         dataset_model_version_path = (
-           dataset_models_root_path + "/" + model_instance._name + "/" + str(model_instance._version)
+            dataset_models_root_path
+            + "/"
+            + model_instance._name
+            + "/"
+            + str(model_instance._version)
         )
 
         try:
             # Create folders
             self._engine.mkdir(model_instance)
 
-            model_instance = self._upload_additional_resources(model_instance, dataset_model_version_path)
+            model_instance = self._upload_additional_resources(
+                model_instance, dataset_model_version_path
+            )
 
             # Read the training_dataset location and reattach to model_instance
             if model_instance.training_dataset is not None:
@@ -255,14 +273,22 @@ class Engine:
             self._model_api.put(model_instance, model_query_params)
 
             # Upload Model files from local path to /Models/{model_instance._name}/{model_instance._version}
-            if os.path.exists(model_path): # check local absolute
+            if os.path.exists(model_path):  # check local absolute
                 self._upload_local_model_folder(model_path, dataset_model_version_path)
-            elif os.path.exists(os.getcwd() + "/" + model_path): # check local relative
-                self._upload_local_model_folder(os.getcwd() + "/" + model_path, dataset_model_version_path)
-            elif self._dataset_api.path_exists(model_path): # check hdfs relative and absolute
+            elif os.path.exists(os.getcwd() + "/" + model_path):  # check local relative
+                self._upload_local_model_folder(
+                    os.getcwd() + "/" + model_path, dataset_model_version_path
+                )
+            elif self._dataset_api.path_exists(
+                model_path
+            ):  # check hdfs relative and absolute
                 self._copy_hopsfs_model(model_path, dataset_model_version_path, _client)
             else:
-                raise IOError("Could not find path {} in the local filesystem or in HopsFS".format(model_path))
+                raise IOError(
+                    "Could not find path {} in the local filesystem or in HopsFS".format(
+                        model_path
+                    )
+                )
 
             # We do not necessarily have access to the Models REST API for the shared model registry, so we do not know if it is registered or not
             if not is_shared_registry:
@@ -314,8 +340,10 @@ class Engine:
         try:
             tmp_dir = tempfile.TemporaryDirectory(dir=os.getcwd())
             self._dataset_api.download(
-              self._build_registry_path(model_instance, model_instance._input_example),
-              tmp_dir.name + "/inputs.json"
+                self._build_registry_path(
+                    model_instance, model_instance._input_example
+                ),
+                tmp_dir.name + "/inputs.json",
             )
             with open(tmp_dir.name + "/inputs.json", "rb") as f:
                 return json.loads(f.read())
@@ -327,8 +355,10 @@ class Engine:
         try:
             tmp_dir = tempfile.TemporaryDirectory(dir=os.getcwd())
             self._dataset_api.download(
-              self._build_registry_path(model_instance, model_instance._environment[0]),
-              tmp_dir.name + "/environment.yml"
+                self._build_registry_path(
+                    model_instance, model_instance._environment[0]
+                ),
+                tmp_dir.name + "/environment.yml",
             )
             with open(tmp_dir.name + "/environment.yml", "r") as f:
                 return f.read()
@@ -340,8 +370,8 @@ class Engine:
         try:
             tmp_dir = tempfile.TemporaryDirectory(dir=os.getcwd())
             self._dataset_api.download(
-              self._build_registry_path(model_instance, model_instance._signature),
-              tmp_dir.name + "/signature.json"
+                self._build_registry_path(model_instance, model_instance._signature),
+                tmp_dir.name + "/signature.json",
             )
             with open(tmp_dir.name + "/signature.json", "rb") as f:
                 return json.loads(f.read())

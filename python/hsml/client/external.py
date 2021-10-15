@@ -20,11 +20,6 @@ import base64
 import json
 import requests
 
-try:
-    from pyspark.sql import SparkSession
-except ImportError:
-    pass
-
 from hsml.client import base, auth, exceptions
 
 

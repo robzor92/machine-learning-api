@@ -14,20 +14,14 @@
 #   limitations under the License.
 #
 
+
 class Column:
     """Metadata object representing a model signature for a model."""
 
-    def __init__(
-            self,
-            name: None,
-            data_type: None
-    ):
+    def __init__(self, name: None, data_type: None):
 
         self.name = name
         self.data_type = data_type
 
     def to_dict(self):
-        return {
-            "name": self.name,
-            "dataType": self.data_type
-        }
+        return {"name": self.name, "dataType": self.data_type}

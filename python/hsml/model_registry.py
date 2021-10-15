@@ -125,9 +125,7 @@ class ModelRegistry:
 
     @property
     def tensorflow(self):
-        """Module for exporting a TensorFlow model.
-
-        """
+        """Module for exporting a TensorFlow model."""
 
         tensorflow_signature.shared_registry_project = self._shared_registry_project
 
@@ -135,9 +133,7 @@ class ModelRegistry:
 
     @property
     def sklearn(self):
-        """Module for exporting a sklearn model.
-
-        """
+        """Module for exporting a sklearn model."""
 
         sklearn_signature.shared_registry_project = self._shared_registry_project
 
@@ -145,9 +141,7 @@ class ModelRegistry:
 
     @property
     def torch(self):
-        """Module for exporting a torch model.
-
-        """
+        """Module for exporting a torch model."""
 
         torch_signature.shared_registry_project = self._shared_registry_project
 
@@ -155,9 +149,7 @@ class ModelRegistry:
 
     @property
     def python(self):
-        """Module for exporting a generic Python model.
-
-        """
+        """Module for exporting a generic Python model."""
 
         python_signature.shared_registry_project = self._shared_registry_project
 
