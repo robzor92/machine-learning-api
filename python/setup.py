@@ -40,7 +40,8 @@ setup(
         "numpy",
         "pyjks",
         "mock",
-        "tqdm"
+        "tqdm",
+        "tensorflow"
     ],
     extras_require={
         "dev": [
