@@ -42,6 +42,7 @@ class Schema:
                 TypeVar("hsfs.training_dataset.TrainingDataset"),  # noqa: F821
                 numpy.ndarray,
                 list,
+                dict,
             ]
         ] = None,
     ):

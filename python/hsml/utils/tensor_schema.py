@@ -25,6 +25,8 @@ class TensorSchema:
 
         if isinstance(tensor_obj, list):
             self.tensors = self._convert_list_to_schema(tensor_obj)
+        elif isinstance(tensor_obj, dict):
+            self.tensors = self._convert_dict_to_schema([tensor_obj])
         elif isinstance(tensor_obj, numpy.ndarray):
             self.tensors = self._convert_tensor_to_schema(tensor_obj)
         else:
@@ -34,6 +36,9 @@ class TensorSchema:
 
     def _convert_tensor_to_schema(self, tensor_obj):
         return Tensor(tensor_obj.dtype, tensor_obj.shape)
+
+    def _convert_dict_to_schema(self, tensor_obj):
+        return self._build_tensor(tensor_obj)
 
     def _convert_list_to_schema(self, tensor_obj):
         if len(tensor_obj) == 1:

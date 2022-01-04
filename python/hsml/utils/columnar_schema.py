@@ -35,6 +35,8 @@ class ColumnarSchema:
     def __init__(self, columnar_obj=None):
         if isinstance(columnar_obj, list):
             self.columns = self._convert_list_to_schema(columnar_obj)
+        elif isinstance(columnar_obj, dict):
+            self.columns = self._convert_list_to_schema([columnar_obj])
         elif isinstance(columnar_obj, pandas.DataFrame):
             self.columns = self._convert_pandas_df_to_schema(columnar_obj)
         elif isinstance(columnar_obj, pandas.Series):
@@ -57,6 +59,9 @@ class ColumnarSchema:
         for column in columnar_obj:
             columns.append(self._build_column(column))
         return columns
+
+    def _convert_dict_to_schema(self, columnar_obj):
+        return self._build_column(columnar_obj)
 
     def _convert_pandas_df_to_schema(self, pandas_df):
         pandas_columns = pandas_df.columns
