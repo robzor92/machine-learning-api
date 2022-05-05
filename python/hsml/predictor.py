@@ -163,6 +163,7 @@ class Predictor(ServingComponent):
         return kwargs
 
     def update_from_response_json(self, json_dict):
+        print(json_dict)
         json_decamelized = humps.decamelize(json_dict)
         self.__init__(**self.extract_fields_from_json(json_decamelized))
         self._set_state(PredictorState.from_response_json(json_decamelized))
