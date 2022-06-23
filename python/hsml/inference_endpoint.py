@@ -89,7 +89,9 @@ class InferenceEndpoint:
 
     def get_any_host(self):
         """Get any host available"""
-        return random.choice(self._hosts)
+        if self._hosts is not None:
+            random.choice(self._hosts)
+        return None
 
     def get_port(self, name):
         """Get port by name"""
