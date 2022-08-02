@@ -14,10 +14,8 @@
 #   limitations under the License.
 #
 
-import warnings
 import humps
 
-from hsml import util
 from hsml.core import experiment_api
 from hsml.tensorflow import signature as tensorflow_signature  # noqa: F401
 from hsml.python import signature as python_signature  # noqa: F401
@@ -37,7 +35,7 @@ class ExperimentRegistry:
         self._project_name = project_name
         self._project_id = project_id
 
-        self._model_registry_id = experiment_registry_id
+        self._experiment_registry_id = experiment_registry_id
 
         self._experiment_api = experiment_api.ExperimentApi()
 
@@ -69,13 +67,11 @@ class ExperimentRegistry:
         # Returns
             `List[Experiment]`: A list of experiment objects.
         # Raises
-            `RestAPIError`: If unable to retrieve model versions from the model registry.
+            `RestAPIError`: If unable to retrieve experiments from the experiment registry.
         """
 
-        return self._model_api.get_models(
-            name,
-            self.model_registry_id,
-            shared_registry_project_name=self.shared_registry_project_name,
+        return self._experiment_api.get_experiments(
+            self.experiment_registry_id,
         )
 
     @property
