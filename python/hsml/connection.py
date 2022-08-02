@@ -20,7 +20,7 @@ from requests.exceptions import ConnectionError
 
 from hsml.decorators import connected, not_connected
 from hsml import client
-from hsml.core import model_api, model_registry_api, model_serving_api
+from hsml.core import experiment_registry_api, model_api, model_registry_api, model_serving_api
 
 CONNECTION_SAAS_HOSTNAME = "c.app.hopsworks.ai"
 
@@ -109,14 +109,24 @@ class Connection:
         self._api_key_value = api_key_value
         self._connected = False
         self._model_api = model_api.ModelApi()
+        self._experiment_registry_api = experiment_registry_api.ExperimentRegistryApi()
         self._model_registry_api = model_registry_api.ModelRegistryApi()
         self._model_serving_api = model_serving_api.ModelServingApi()
 
         self.connect()
 
     @connected
+    def get_experiment_registry(self):
+        """Get a reference to the project's experiment registry to perform operations on.
+
+        # Returns
+            `ExperimentRegistry`. An experiment registry handle object to perform operations on.
+        """
+        return self._experiment_registry_api.get()
+
+    @connected
     def get_model_registry(self, project: str = None):
-        """Get a reference to a model registry to perform operations on, defaulting to the project's default model registry.
+        """Get a reference to a model registry to perform operations on, defaulting to the project's model registry.
         Shared model registries can be retrieved by passing the `project` argument.
 
         # Arguments
