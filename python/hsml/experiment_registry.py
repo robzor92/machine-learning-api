@@ -61,16 +61,20 @@ class ExperimentRegistry:
             self.experiment_registry_id,
         )
 
-    def get_experiments(self):
-        """Get all experiments from the experiments registry.
+    def get_or_create_experiment(self, name: str):
+        """Get an experiment from the experiment registry.
+        Getting an experiment from the Experiment Registry means getting its metadata handle, so you can subsequently register a new run.
 
+        # Arguments
+            name: Name of the experiment to get.
         # Returns
-            `List[Experiment]`: A list of experiment objects.
+            `Experiment`: The experiment object.
         # Raises
-            `RestAPIError`: If unable to retrieve experiments from the experiment registry.
+            `RestAPIError`: If unable to retrieve experiment from the experiment registry.
         """
 
-        return self._experiment_api.get_experiments(
+        return self._experiment_api.get(
+            name,
             self.experiment_registry_id,
         )
 
