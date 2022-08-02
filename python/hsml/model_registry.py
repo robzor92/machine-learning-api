@@ -59,16 +59,15 @@ class ModelRegistry:
         return cls(**json_decamelized)
 
     def get_model(self, name: str, version: int = None):
-        """Get a model entity from the model registry.
-        Getting a model from the Model Registry means getting its metadata handle
-        so you can subsequently download the model directory.
+        """Get a specific model version from the model registry.
+        Downloading a model from the Model Registry means getting its object representation, then call the .download() function to subsequently download the model files.
 
         # Arguments
             name: Name of the model to get.
             version: Version of the model to retrieve, defaults to `None` and will
                 return the `version=1`.
         # Returns
-            `Model`: The model metadata object.
+            `Model`: The model object.
         # Raises
             `RestAPIError`: If unable to retrieve model from the model registry.
         """
@@ -90,8 +89,8 @@ class ModelRegistry:
         )
 
     def get_models(self, name: str):
-        """Get all model entities from the model registry for a specified name.
-        Getting all models from the Model Registry for a given name returns a list of model entities, one for each version registered under
+        """Get all model versions from the model registry for a specified name.
+        Getting all models from the Model Registry for a given name returns a list of models, one for each version registered under
         the specified model name.
 
         # Arguments
@@ -109,7 +108,7 @@ class ModelRegistry:
         )
 
     def get_best_model(self, name: str, metric: str, direction: str):
-        """Get the best performing model entity from the model registry.
+        """Get the best performing model from the model registry.
         Getting the best performing model from the Model Registry means specifying in addition to the name, also a metric
         name corresponding to one of the keys in the training_metrics dict of the model and a direction. For example to
         get the model version with the highest accuracy, specify metric='accuracy' and direction='max'.
