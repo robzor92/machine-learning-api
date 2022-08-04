@@ -74,20 +74,9 @@ class ExperimentApi:
 
     def get_experiments(
         self,
-        name,
-        model_registry_id,
-        shared_registry_project_name=None,
-        metric=None,
-        direction=None,
     ):
         """Get the metadata of models based on the name or optionally the best model given a metric and direction.
 
-        :param name: name of the model
-        :type name: str
-        :param metric: Name of the metric to maximize or minimize
-        :type metric: str
-        :param direction: Whether to maximize or minimize the metric, allowed values are 'max' or 'min'
-        :type direction: str
         :return: model metadata object
         :rtype: Model
         """
@@ -96,31 +85,11 @@ class ExperimentApi:
         path_params = [
             "project",
             _client._project_id,
-            "modelregistries",
-            model_registry_id,
-            "models",
+            "experiments",
         ]
-        query_params = {
-            "expand": "trainingdatasets",
-            "filter_by": ["name_eq:" + name],
-        }
+        query_params = {}
 
-        if metric is not None and direction is not None:
-            if direction.lower() == "max":
-                direction = "desc"
-            elif direction.lower() == "min":
-                direction = "asc"
-
-            query_params["sort_by"] = metric + ":" + direction
-            query_params["limit"] = "1"
-
-        model_json = _client._send_request("GET", path_params, query_params)
-        models_meta = model.Model.from_response_json(model_json)
-
-        for model_meta in models_meta:
-            model_meta.shared_registry_project_name = shared_registry_project_name
-
-        return models_meta
+        return experiment.Experiment.from_response_json(_client._send_request("GET", path_params, query_params))
 
     def delete(self, model_instance):
         """Delete the model and metadata.

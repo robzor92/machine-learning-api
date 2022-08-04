@@ -35,8 +35,6 @@ class ExperimentRegistry:
         self._project_name = project_name
         self._project_id = project_id
 
-        self._experiment_registry_id = experiment_registry_id
-
         self._experiment_api = experiment_api.ExperimentApi()
 
     @classmethod
@@ -58,7 +56,6 @@ class ExperimentRegistry:
 
         return self._experiment_api.get(
             name,
-            self.experiment_registry_id,
         )
 
     def get_or_create_experiment(self, name: str):
@@ -75,7 +72,6 @@ class ExperimentRegistry:
 
         return self._experiment_api.get(
             name,
-            self.experiment_registry_id,
         )
 
     @property
