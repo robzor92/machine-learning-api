@@ -20,7 +20,7 @@ from typing import Union, Optional
 
 from hsml.engine import experiment_engine
 
-from hsml import client, util, run
+from hsml import client, util
 class Experiment:
     """Metadata object representing an experiment in the Experiment Registry."""
 
