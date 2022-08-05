@@ -58,7 +58,7 @@ class ExperimentEngine:
                         current_highest_id = current_id
                 except RestAPIError:
                     pass
-            run_instance.id = current_highest_id + 1
+            run_instance.run_id = current_highest_id + 1
 
         return run_instance
 
@@ -76,7 +76,7 @@ class ExperimentEngine:
                 )
             )
 
-        dataset_experiment_name_path = dataset_experiments_root_path + "/" + run_instance.name
+        dataset_experiment_name_path = dataset_experiments_root_path + "/" + run_instance.experiment_name
         if not self._dataset_api.path_exists(dataset_experiment_name_path):
             self._dataset_api.mkdir(dataset_experiment_name_path)
 

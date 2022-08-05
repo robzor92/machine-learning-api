@@ -24,6 +24,8 @@ from hsml.torch import signature as torch_signature  # noqa: F401
 
 from hsml.experiment import Experiment
 
+from hsml.client.exceptions import RestAPIError
+
 
 class ExperimentRegistry:
     DEFAULT_VERSION = 1
@@ -75,7 +77,7 @@ class ExperimentRegistry:
                 name,
             )
         except RestAPIError as e:
-            return Experiment(name)
+            return Experiment(name, project_name=self._project_name)
 
     @property
     def project_name(self):

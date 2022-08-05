@@ -27,7 +27,6 @@ class Experiment:
 
     def __init__(
         self,
-        id,
         name,
         project_name=None,
         runs=None,
@@ -35,7 +34,6 @@ class Experiment:
         creator=None,
         experiment_registry_id=None,
     ):
-        self._id = id
         self._name = name
 
         self._project_name = project_name
@@ -51,8 +49,8 @@ class Experiment:
 
     def start_run(self):
         """Start the run."""
-        run = Run(self.name)
-        run = run.start_run(self.path())
+        run = Run(experiment_name=self.name)
+        run = run._start_run(self)
         return run
 
     def delete(self):

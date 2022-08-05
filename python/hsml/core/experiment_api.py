@@ -23,11 +23,11 @@ class ExperimentApi:
     def __init__(self):
         pass
 
-    def put(self, experiment_instance, query_params):
+    def put(self, run_instance, query_params):
         """Save experiment run to the experiment registry.
 
-        :param experiment_instance: metadata object of experiment to be saved
-        :type experiment_instance: Experiment
+        :param run_instance: metadata object of experiment run to be saved
+        :type run_instance: Run
         :return: updated metadata object of the experiment
         :rtype: Experiment
         """
@@ -36,17 +36,17 @@ class ExperimentApi:
             "project",
             _client._project_id,
             "experiments",
-            str(experiment_instance.name),
+            str(run_instance.experiment_name),
             "runs",
         ]
         headers = {"content-type": "application/json"}
-        return experiment_instance.update_from_response_json(
+        return run_instance.update_from_response_json(
             _client._send_request(
                 "PUT",
                 path_params,
                 headers=headers,
                 query_params=query_params,
-                data=experiment_instance.json(),
+                data=run_instance.json(),
             )
         )
 
