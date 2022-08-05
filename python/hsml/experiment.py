@@ -70,9 +70,9 @@ class Experiment:
         if "count" in json_decamelized:
             if json_decamelized["count"] == 0:
                 return []
-            return [util.set_model_class(model) for model in json_decamelized["items"]]
+            return [cls(**model) for model in json_decamelized["items"]]
         else:
-            return util.set_model_class(json_decamelized)
+            return cls(**json_decamelized)
 
     def update_from_response_json(self, json_dict):
         json_decamelized = humps.decamelize(json_dict)
