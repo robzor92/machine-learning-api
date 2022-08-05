@@ -30,7 +30,6 @@ class ExperimentRegistry:
         self,
         project_name,
         project_id,
-        experiment_registry_id,
     ):
         self._project_name = project_name
         self._project_id = project_id

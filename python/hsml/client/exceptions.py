@@ -59,6 +59,8 @@ class UnknownSecretStorageError(Exception):
 class ModelRegistryException(Exception):
     """Generic model registry exception"""
 
+class ExperimentRegistryException(Exception):
+    """Generic experiment registry exception"""
 
 class ModelServingException(Exception):
     """Generic model serving exception"""
