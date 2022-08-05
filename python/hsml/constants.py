@@ -18,6 +18,9 @@
 DEFAULT = dict()  # used as default parameter for a class object
 
 
+class EXPERIMENTS_REGISTRY:
+    EXPERIMENTS_DATASET = "Experiments"
+
 class MODEL_SERVING:
     MODELS_DATASET = "Models"
 

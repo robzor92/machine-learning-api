@@ -21,40 +21,45 @@ from typing import Union, Optional
 from hsml.engine import experiment_engine
 
 from hsml import client, util
-class Experiment:
+class Run:
     """Metadata object representing an experiment in the Experiment Registry."""
 
     def __init__(
         self,
-        id,
-        name,
-        projectName=None,
-        runs=None,
-        description=None,
-        creator=None,
-        experiment_registry_id=None,
+        experiment_name,
+        run_id,
+        project_name,
     ):
-        self._id = id
-        self._name = name
-
-        self._experiment_registry_id = experiment_registry_id
+        self._experiment_name = experiment_name
+        self._run_id = run_id
+        self._project_name = project_name
 
         self._experiment_engine = experiment_engine.ExperimentEngine()
 
-    def start_run(self):
+    @property
+    def experiment_name(self):
+        """Name of the experiment."""
+        return self._experiment_name
+
+    @experiment_name.setter
+    def experiment_name(self, experiment_name):
+        self._experiment_name = experiment_name
+
+    @property
+    def run_id(self):
+        """Id of the run."""
+        return self._run_id
+
+    @run_id.setter
+    def run_id(self, run_id):
+        self._run_id = run_id
+
+    def _start_run(self, experiment_path):
+        self._experiment_engine.start_run(self, experiment_path)
+
+    def end_run(self):
         """Persist this model including model files and metadata to the model registry."""
-        return Run(self.name)
-
-    def delete(self):
-        """Delete the experiment and all recorded runs
-
-        !!! danger "Potentially dangerous operation"
-            This operation drops all runs associated with this experiment.
-
-        # Raises
-            `RestAPIError`.
-        """
-        self._experiment_engine.delete(self)
+        self._experiment_engine.end_run(self)
 
     @classmethod
     def from_response_json(cls, json_dict):
