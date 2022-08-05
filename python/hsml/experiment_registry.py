@@ -22,6 +22,8 @@ from hsml.python import signature as python_signature  # noqa: F401
 from hsml.sklearn import signature as sklearn_signature  # noqa: F401
 from hsml.torch import signature as torch_signature  # noqa: F401
 
+from hsml.experiment import Experiment
+
 
 class ExperimentRegistry:
     DEFAULT_VERSION = 1
@@ -68,10 +70,12 @@ class ExperimentRegistry:
         # Raises
             `RestAPIError`: If unable to retrieve experiment from the experiment registry.
         """
-
-        return self._experiment_api.get(
-            name,
-        )
+        try:
+            return self._experiment_api.get(
+                name,
+            )
+        except RestAPIError as e:
+            return Experiment(name)
 
     @property
     def project_name(self):

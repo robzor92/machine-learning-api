@@ -19,7 +19,9 @@ import humps
 
 from hsml.engine import experiment_engine
 
-from hsml import client, util, run
+from hsml import client, util
+
+from hsml.run import Run
 class Experiment:
     """Metadata object representing an experiment in the Experiment Registry."""
 
@@ -111,7 +113,7 @@ class Experiment:
         """Version of the model."""
         return self._project_name
 
-    @version.setter
+    @project_name.setter
     def project_name(self, project_name):
         self._project_name = project_name
 

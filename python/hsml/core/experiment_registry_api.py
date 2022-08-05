@@ -32,7 +32,7 @@ class ExperimentRegistryApi:
         _client = client.get_instance()
 
         # In the case of default model registry, validate that there is a Models dataset in the connected project
-        if  not self._dataset_api.path_exists("Experiment"):
+        if  not self._dataset_api.path_exists("Experiments"):
             raise ExperimentRegistryException(
                 "No Experiments dataset exists in project {}, Please create the dataset manually.".format(
                     _client._project_name
