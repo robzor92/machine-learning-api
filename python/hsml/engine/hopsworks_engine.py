@@ -18,7 +18,6 @@ from hsml.core import native_hdfs_api
 from hsml import constants
 
 from hsml.run import Run
-from hsml.model import Model
 
 
 class HopsworksEngine:
@@ -29,7 +28,7 @@ class HopsworksEngine:
         if type(obj) == Run:
             self._native_hdfs_api.mkdir(obj.path)
             self._native_hdfs_api.chmod(obj.path, "ug+rwx")
-        elif isinstance(obj, Model):
+        else:
             model_version_dir_hdfs = "/Projects/{}/{}/{}/{}".format(
                 obj.project_name,
                 constants.MODEL_SERVING.MODELS_DATASET,
@@ -40,11 +39,10 @@ class HopsworksEngine:
             self._native_hdfs_api.chmod(model_version_dir_hdfs, "ug+rwx")
 
     def delete(self, obj):
-        if isinstance(obj, Model):
-            model_version_dir_hdfs = "/Projects/{}/{}/{}/{}".format(
-                model_instance.project_name,
-                constants.MODEL_SERVING.MODELS_DATASET,
-                model_instance.name,
-                str(model_instance.version),
-            )
-            self._native_hdfs_api.delete(model_version_dir_hdfs)
+        model_version_dir_hdfs = "/Projects/{}/{}/{}/{}".format(
+            obj.project_name,
+            constants.MODEL_SERVING.MODELS_DATASET,
+            obj.name,
+            str(obj.version),
+        )
+        self._native_hdfs_api.delete(model_version_dir_hdfs)

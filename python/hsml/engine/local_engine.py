@@ -17,7 +17,6 @@
 from hsml.core import dataset_api
 
 from hsml.run import Run
-from hsml.model import Model
 
 class LocalEngine:
     def __init__(self):
@@ -26,9 +25,8 @@ class LocalEngine:
     def mkdir(self, obj):
         if type(obj) == Run:
             self._dataset_api.mkdir(obj.path)
-        elif isinstance(obj, Model):
+        else:
             self._dataset_api.mkdir(obj.version_path)
 
     def delete(self, model_instance):
-        if isinstance(obj, Model):
-            self._dataset_api.rm(model_instance.version_path)
+        self._dataset_api.rm(model_instance.version_path)
