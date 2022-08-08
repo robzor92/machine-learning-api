@@ -37,7 +37,7 @@ class ExperimentEngine:
         else:
             self._engine = hopsworks_engine.HopsworksEngine()
 
-    def _set_run_id(
+    def _set_id(
         self, run_instance, dataset_experiment_path
     ):
         # Set run id if not defined
@@ -59,6 +59,8 @@ class ExperimentEngine:
                 except RestAPIError:
                     pass
             run_instance.run_id = current_highest_id + 1
+            
+        run_instance.id = run_instance.experiment_name + "_run_" + str(run_instance.run_id)
 
         return run_instance
 
@@ -80,7 +82,7 @@ class ExperimentEngine:
         if not self._dataset_api.path_exists(dataset_experiment_name_path):
             self._dataset_api.mkdir(dataset_experiment_name_path)
 
-        run_instance = self._set_run_id(
+        run_instance = self._set_id(
             run_instance, experiment_path
         )
 

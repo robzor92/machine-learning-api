@@ -26,10 +26,12 @@ class Run:
 
     def __init__(
         self,
+        id=None,
         run_id=None,
         experiment_name=None,
         project_name=None,
     ):
+        self._id = id
         self._run_id = run_id
         self._experiment_name = experiment_name
         self._project_name = project_name
@@ -65,6 +67,15 @@ class Run:
     def to_dict(self):
         return {
         }
+
+    @property
+    def id(self):
+        """id of the model."""
+        return self._id
+
+    @id.setter
+    def id(self, id):
+        self._id = id
 
     @property
     def run_id(self):
