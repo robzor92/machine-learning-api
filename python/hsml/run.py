@@ -94,7 +94,7 @@ class Run:
         self._project_name = project_name
 
     @property
-    def version_path(self):
+    def path(self):
         """path of the model with version folder omitted. Resolves to /Projects/{project_name}/Models/{name}"""
         return "/Projects/{}/Experiments/{}/{}".format(self.project_name, self.experiment_name, "run_" + str(self.run_id))
 
