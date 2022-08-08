@@ -88,7 +88,7 @@ class ExperimentEngine:
 
         self._engine.mkdir(run_instance)
 
-        run_query_params = {}
+        run_query_params = {'type': 'INIT'}
 
         run_instance = self._experiment_api.put(
             run_instance, run_query_params
