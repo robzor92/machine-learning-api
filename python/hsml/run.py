@@ -30,11 +30,14 @@ class Run:
         experiment_name=None,
         project_name=None,
         environment=None,
+        program=None,
     ):
         self._id = id
         self._run_id = run_id
         self._experiment_name = experiment_name
         self._project_name = project_name
+        self._environment = environment
+        self._program = program
 
         self._experiment_engine = experiment_engine.ExperimentEngine()
 
