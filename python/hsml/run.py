@@ -29,6 +29,7 @@ class Run:
         run_id=None,
         experiment_name=None,
         project_name=None,
+        environment=None,
     ):
         self._id = id
         self._run_id = run_id
@@ -69,8 +70,9 @@ class Run:
             "runId": self._run_id,
             "experimentName": self._experiment_name,
             "projectName": self._project_name,
+            "environment": self._environment,
         }
-    
+
     @property
     def id(self):
         """id of the model."""
@@ -106,6 +108,15 @@ class Run:
     @project_name.setter
     def project_name(self, project_name):
         self._project_name = project_name
+
+    @property
+    def environment(self):
+        """environment of the model."""
+        return self._environment
+
+    @environment.setter
+    def environment(self, environment):
+        self._environment = environment
 
     @property
     def path(self):
