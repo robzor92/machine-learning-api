@@ -71,6 +71,7 @@ class Run:
             "experimentName": self._experiment_name,
             "projectName": self._project_name,
             "environment": self._environment,
+            "program": self._program,
         }
 
     @property
@@ -117,6 +118,15 @@ class Run:
     @environment.setter
     def environment(self, environment):
         self._environment = environment
+
+    @property
+    def program(self):
+        """program of the model."""
+        return self._program
+
+    @program.setter
+    def program(self, program):
+        self._program = program
 
     @property
     def path(self):
