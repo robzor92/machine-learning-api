@@ -65,8 +65,12 @@ class Run:
 
     def to_dict(self):
         return {
+            "id": self._id,
+            "runId": self._run_id,
+            "experimentName": self._experiment_name,
+            "projectName": self._project_name,
         }
-
+    
     @property
     def id(self):
         """id of the model."""
