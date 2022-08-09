@@ -65,14 +65,20 @@ class Run:
         return json.dumps(self, cls=util.MLEncoder)
 
     def to_dict(self):
-        return {
+        run = {
             "id": self._id,
             "runId": self._run_id,
             "experimentName": self._experiment_name,
             "projectName": self._project_name,
-            "environment": self._environment,
-            "program": self._program,
         }
+
+        if hasattr(self, "environment"):
+            run["environment"] = self._environment
+
+        if hasattr(self, "program"):
+            run["program"] = self._program
+            
+        return run
 
     @property
     def id(self):
