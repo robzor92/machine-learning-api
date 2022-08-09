@@ -118,6 +118,6 @@ class Run:
             + "/experiments/"
             + str(self.experiment_name)
             + "/runs/"
-            + str(self.run_id)
+            + "run_" + str(self.run_id)
         )
         return util.get_hostname_replaced_url(path)
