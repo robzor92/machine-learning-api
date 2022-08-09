@@ -151,7 +151,6 @@ class Run:
             + str(client.get_instance()._project_id)
             + "/experiments/"
             + str(self.experiment_name)
-            + "/runs/"
-            + "run_" + str(self.run_id)
+            + "/runs"
         )
         return util.get_hostname_replaced_url(path)
