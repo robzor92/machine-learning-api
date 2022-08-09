@@ -39,7 +39,7 @@ class Run:
         self._experiment_engine = experiment_engine.ExperimentEngine()
 
     def _start_run(self, experiment):
-        self._experiment_engine.start_run(self, experiment.path)
+        return self._experiment_engine.start_run(self, experiment.path)
 
     def end_run(self):
         """Persist this model including model files and metadata to the model registry."""
@@ -77,7 +77,7 @@ class Run:
 
         if hasattr(self, "program"):
             run["program"] = self._program
-            
+
         return run
 
     @property
