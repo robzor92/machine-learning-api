@@ -26,16 +26,14 @@ class Run:
     def __init__(
         self,
         id=None,
-        run_id=None,
+        run_folder=None,
         experiment_name=None,
-        project_name=None,
         environment=None,
         program=None,
     ):
         self._id = id
-        self._run_id = run_id
+        self._run_folder = run_folder
         self._experiment_name = experiment_name
-        self._project_name = project_name
         self._environment = environment
         self._program = program
 
@@ -70,9 +68,8 @@ class Run:
     def to_dict(self):
         run = {
             "id": self._id,
-            "runId": self._run_id,
+            "runFolder": self._run_folder,
             "experimentName": self._experiment_name,
-            "projectName": self._project_name,
         }
 
         if hasattr(self, "environment"):
@@ -93,13 +90,13 @@ class Run:
         self._id = id
 
     @property
-    def run_id(self):
-        """run_id of the model."""
-        return self._run_id
+    def run_folder(self):
+        """run_folder of the model."""
+        return self._run_folder
 
-    @run_id.setter
-    def run_id(self, run_id):
-        self._run_id = run_id
+    @run_folder.setter
+    def run_folder(self, run_folder):
+        self._run_folder = run_folder
 
     @property
     def experiment_name(self):
@@ -140,10 +137,10 @@ class Run:
     @property
     def path(self):
         """path of the model with version folder omitted. Resolves to /Projects/{project_name}/Models/{name}"""
-        return "/Projects/{}/Experiments/{}/{}".format(self.project_name, self.experiment_name, "run_" + str(self.run_id))
+        return "/Projects/{}/Experiments/{}/{}".format(self.project_name, self.experiment_name, str(self.run_folder))
 
     def __repr__(self):
-        return f"Run(experiment: {self.experiment_name!r}, run_id: {self.run_id!r})"
+        return f"Run(experiment: {self.experiment_name!r}, folder: {self.run_folder!r})"
 
     def get_url(self):
         path = (

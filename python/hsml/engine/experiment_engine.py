@@ -41,7 +41,7 @@ class ExperimentEngine:
         self, run_instance, dataset_experiment_path
     ):
         # Set run id if not defined
-        if run_instance.run_id is None:
+        if run_instance.run_folder is None:
             current_highest_id = 0
             for item in self._dataset_api.list(dataset_experiment_path, sort_by="NAME:desc")[
                 "items"
@@ -58,9 +58,9 @@ class ExperimentEngine:
                         current_highest_id = current_id
                 except RestAPIError:
                     pass
-            run_instance.run_id = current_highest_id + 1
+            run_instance.run_folder = "run_" + str(current_highest_id + 1)
             
-        run_instance.id = run_instance.experiment_name + "_run_" + str(run_instance.run_id)
+        run_instance.id = run_instance.experiment_name + "_" + str(run_instance.run_folder)
 
         return run_instance
 
