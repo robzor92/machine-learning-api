@@ -74,7 +74,7 @@ class ExperimentRegistry:
                 name,
             )
         except RestAPIError as e:
-            self._experiment_engine.create(name)
+            return self._experiment_engine.create(name)
 
     @property
     def project_name(self):

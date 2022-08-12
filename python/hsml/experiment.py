@@ -27,7 +27,7 @@ class Experiment:
 
     def __init__(
         self,
-        id=None,    
+        id=None,
         name=None,
         created=None,
         runs=None,
