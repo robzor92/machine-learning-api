@@ -64,6 +64,27 @@ class ExperimentEngine:
 
         return run_instance
 
+    def create(self, name):
+
+        _client = client.get_instance()
+
+        if not self._dataset_api.path_exists(constants.EXPERIMENTS_REGISTRY.EXPERIMENTS_DATASET):
+            raise AssertionError(
+                "{} dataset does not exist in this project. Please create it manually.".format(
+                    constants.EXPERIMENTS_REGISTRY.EXPERIMENTS_DATASET
+                )
+            )
+
+        self._engine.mkdir("/Projects/{}/{}/{}".format(_client._project_name, constants.EXPERIMENTS_REGISTRY.EXPERIMENTS_DATASET, name))
+
+        experiment = self._experiment_api.put(
+            name
+        )
+
+        print("Experiment created, explore it at " + experiment.get_url())
+
+        return experiment
+
     def start_run(self, run_instance, experiment_path):
 
         _client = client.get_instance()

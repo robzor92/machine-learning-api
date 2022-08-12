@@ -16,17 +16,12 @@
 
 from hsml.core import dataset_api
 
-from hsml.run import Run
-
 class LocalEngine:
     def __init__(self):
         self._dataset_api = dataset_api.DatasetApi()
 
-    def mkdir(self, obj):
-        if type(obj) == Run:
-            self._dataset_api.mkdir(obj.path)
-        else:
-            self._dataset_api.mkdir(obj.version_path)
+    def mkdir(self, path):
+        self._dataset_api.mkdir(path)
 
-    def delete(self, model_instance):
-        self._dataset_api.rm(model_instance.version_path)
+    def delete(self, path):
+        self._dataset_api.rm(path)

@@ -151,7 +151,6 @@ class Experiment:
         path = (
             "/p/"
             + str(client.get_instance()._project_id)
-            + "/experiments/"
-            + str(self.name)
+            + "/experiments"
         )
         return util.get_hostname_replaced_url(path)

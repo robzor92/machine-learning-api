@@ -18,7 +18,7 @@ import humps
 
 from hsml.core import experiment_api
 
-from hsml.experiment import Experiment
+from hsml.engine import experiment_engine
 
 from hsml.client.exceptions import RestAPIError
 
@@ -35,6 +35,7 @@ class ExperimentRegistry:
         self._project_id = project_id
 
         self._experiment_api = experiment_api.ExperimentApi()
+        self._experiment_engine = experiment_engine.ExperimentEngine()
 
     @classmethod
     def from_response_json(cls, json_dict):
@@ -73,7 +74,7 @@ class ExperimentRegistry:
                 name,
             )
         except RestAPIError as e:
-            self._experiment_api.put(name)
+            self._experiment_engine.create(name)
 
     @property
     def project_name(self):

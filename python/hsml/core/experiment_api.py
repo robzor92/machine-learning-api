@@ -24,7 +24,7 @@ class ExperimentApi:
         pass
 
     def put(self, name):
-        """Save experiment run to the experiment registry.
+        """Save experiment to the experiment registry.
 
         :param run_instance: metadata object of experiment run to be saved
         :type run_instance: Run
