@@ -53,7 +53,7 @@ class Experiment:
 
     def start_run(self):
         """Start the run."""
-        run = Run(experiment_name=self.name)
+        run = Run(name=self.name)
         run = run._start_run(self)
         return run
 

@@ -26,6 +26,7 @@ class Run:
     def __init__(
         self,
         id=None,
+        ml_id=None,
         started=None,
         finished=None,
         status=None,
@@ -34,8 +35,11 @@ class Run:
         program=None,
         parameters=None,
         metrics=None,
+        experiment_name=None,
+        project_name=None,
     ):
         self._id = id
+        self._ml_id = ml_id
         self._started = started
         self._finished = finished
         self._status = status
@@ -44,6 +48,9 @@ class Run:
         self._program = program
         self._parameters = parameters
         self._metrics = metrics
+
+        self._experiment_name = experiment_name
+        self._project_name = project_name
 
         self._experiment_engine = experiment_engine.ExperimentEngine()
 
@@ -55,14 +62,17 @@ class Run:
         self._experiment_engine.end_run(self)
 
     @classmethod
-    def from_response_json(cls, json_dict):
+    def from_response_json(cls, json_dict, project_name, experiment_name):
         json_decamelized = humps.decamelize(json_dict)
-        if "count" in json_decamelized:
-            if json_decamelized["count"] == 0:
-                return []
-            return [util.set_model_class(model) for model in json_decamelized["items"]]
+        if "count" not in json_decamelized:
+            return cls(**json_decamelized, project_name=project_name, experiment_name=experiment_name)
+        elif json_decamelized["count"] == 0:
+            return []
         else:
-            return util.set_model_class(json_decamelized)
+            return [
+                cls(**run, project_name=project_name, experiment_name=experiment_name)
+                for run in json_decamelized["items"]
+            ]
 
     def update_from_response_json(self, json_dict):
         json_decamelized = humps.decamelize(json_dict)
@@ -172,17 +182,17 @@ class Run:
     @property
     def path(self):
         """path of the model with version folder omitted. Resolves to /Projects/{project_name}/Models/{name}"""
-        return "/Projects/{}/Experiments/{}/{}".format(self.project_name, self.experiment_name, str(self.run_folder))
+        return "/Projects/{}/Experiments/{}/{}".format(self._project_name, self._experiment_name, str(self.run_folder))
 
     def __repr__(self):
-        return f"Run(experiment: {self.experiment_name!r}, folder: {self.run_folder!r})"
+        return f"Run(experiment: {self._experiment_name!r}, folder: {self.run_folder!r})"
 
     def get_url(self):
         path = (
             "/p/"
             + str(client.get_instance()._project_id)
             + "/experiments/"
-            + str(self.experiment_name)
+            + str(self._experiment_name)
             + "/runs"
         )
         return util.get_hostname_replaced_url(path)
