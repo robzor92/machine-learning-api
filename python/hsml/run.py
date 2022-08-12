@@ -26,16 +26,24 @@ class Run:
     def __init__(
         self,
         id=None,
-        run_folder=None,
-        experiment_name=None,
+        started=None,
+        finished=None,
+        status=None,
+        creator=None,
         environment=None,
         program=None,
+        parameters=None,
+        metrics=None,
     ):
         self._id = id
-        self._run_folder = run_folder
-        self._experiment_name = experiment_name
+        self._started = started
+        self._finished = finished
+        self._status = status
+        self._creator = creator
         self._environment = environment
         self._program = program
+        self._parameters = parameters
+        self._metrics = metrics
 
         self._experiment_engine = experiment_engine.ExperimentEngine()
 
@@ -90,31 +98,40 @@ class Run:
         self._id = id
 
     @property
-    def run_folder(self):
-        """run_folder of the model."""
-        return self._run_folder
+    def started(self):
+        """started of the model."""
+        return self._started
 
-    @run_folder.setter
-    def run_folder(self, run_folder):
-        self._run_folder = run_folder
-
-    @property
-    def experiment_name(self):
-        """experiment_name of the model."""
-        return self._experiment_name
-
-    @experiment_name.setter
-    def experiment_name(self, experiment_name):
-        self._experiment_name = experiment_name
+    @started.setter
+    def started(self, started):
+        self._started = started
 
     @property
-    def project_name(self):
-        """project_name of the model."""
-        return self._project_name
+    def finished(self):
+        """finished of the model."""
+        return self._finished
 
-    @project_name.setter
-    def project_name(self, project_name):
-        self._project_name = project_name
+    @finished.setter
+    def finished(self, finished):
+        self._finished = finished
+
+    @property
+    def status(self):
+        """status of the model."""
+        return self._status
+
+    @status.setter
+    def status(self, status):
+        self._status = status
+
+    @property
+    def creator(self):
+        """status of the model."""
+        return self._creator
+
+    @creator.setter
+    def creator(self, creator):
+        self._creator = creator
 
     @property
     def environment(self):
@@ -133,6 +150,24 @@ class Run:
     @program.setter
     def program(self, program):
         self._program = program
+
+    @property
+    def parameters(self):
+        """parameters of the model."""
+        return self._parameters
+
+    @parameters.setter
+    def parameters(self, parameters):
+        self._parameters = parameters
+
+    @property
+    def metrics(self):
+        """parameters of the model."""
+        return self._metrics
+
+    @parameters.setter
+    def parameters(self, metrics):
+        self._metrics = metrics
 
     @property
     def path(self):

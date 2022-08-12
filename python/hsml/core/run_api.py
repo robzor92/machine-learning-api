@@ -39,8 +39,7 @@ class RunApi:
             str(run_instance.experiment_name),
             "runs",
         ]
-        print(run_instance.to_dict())
-        print(path_params)
+
         headers = {"content-type": "application/json"}
         return run_instance.update_from_response_json(
             _client._send_request(
