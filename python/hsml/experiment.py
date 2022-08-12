@@ -27,16 +27,21 @@ class Experiment:
 
     def __init__(
         self,
-        name,
-        project_name=None,
+        id=None,    
+        name=None,
+        created=None,
         runs=None,
         description=None,
         creator=None,
-        experiment_registry_id=None,
+        type=None,
+        items=None,
+        href=None,
     ):
+        self._id = id
+
         self._name = name
 
-        self._project_name = project_name
+        self._created = created
 
         self._runs = runs
 
@@ -44,7 +49,6 @@ class Experiment:
 
         self._creator = creator
 
-        self._experiment_registry_id = experiment_registry_id
         self._experiment_engine = experiment_engine.ExperimentEngine()
 
     def start_run(self):
@@ -107,13 +111,13 @@ class Experiment:
         self._name = name
 
     @property
-    def project_name(self):
-        """Version of the model."""
-        return self._project_name
+    def created(self):
+        """created of the model."""
+        return self._created
 
-    @project_name.setter
-    def project_name(self, project_name):
-        self._project_name = project_name
+    @created.setter
+    def created(self, created):
+        self._created = created
 
     @property
     def runs(self):
