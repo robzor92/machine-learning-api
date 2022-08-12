@@ -73,7 +73,7 @@ class ExperimentRegistry:
                 name,
             )
         except RestAPIError as e:
-            return Experiment(name, project_name=self._project_name)
+            self._experiment_api.put(name)
 
     @property
     def project_name(self):
