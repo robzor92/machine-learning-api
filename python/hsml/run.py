@@ -190,7 +190,7 @@ class Run:
     @property
     def path(self):
         """path of the model with version folder omitted. Resolves to /Projects/{project_name}/Models/{name}"""
-        return "/Projects/{}/Experiments/{}/{}".format(self._project_name, self._experiment_name, self.ml_id[len((self._experiment_name)+1):])
+        return "/Projects/{}/Experiments/{}/{}".format(self._project_name, self._experiment_name, self.ml_id[(len(self._experiment_name)+1):])
 
     def __repr__(self):
         return f"Run(experiment: {self._experiment_name!r})"
