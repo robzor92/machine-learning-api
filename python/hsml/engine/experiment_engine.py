@@ -104,7 +104,7 @@ class ExperimentEngine:
             run_instance, experiment_path
         )
 
-        self._engine.mkdir(run_instance)
+        self._engine.mkdir(run_instance.path)
 
         run_query_params = {}
 
