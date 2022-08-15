@@ -50,6 +50,8 @@ class Experiment:
 
         self._creator = creator
 
+        self._project_name = project_name
+
         self._experiment_engine = experiment_engine.ExperimentEngine()
 
     def start_run(self):
@@ -150,7 +152,7 @@ class Experiment:
     @property
     def path(self):
         """path of the experiment. Resolves to /Projects/{project_name}/Experiments/{name}"""
-        return "/Projects/{}/Experiments/{}".format(self.project_name, self.name)
+        return "/Projects/{}/Experiments/{}".format(self._project_name, self.name)
 
     def get_url(self):
         path = (
