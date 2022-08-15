@@ -36,7 +36,7 @@ class RunApi:
             "project",
             _client._project_id,
             "experiments",
-            str(run_instance.experiment_name),
+            str(run_instance._experiment_name),
             "runs",
         ]
 

@@ -86,6 +86,8 @@ class Run:
     def to_dict(self):
         run = {
             "id": self._id,
+            "mlId": self._ml_id,
+            "status": self._status,
             "experimentName": self._experiment_name,
         }
 
