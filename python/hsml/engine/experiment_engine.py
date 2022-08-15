@@ -99,7 +99,7 @@ class ExperimentEngine:
                 )
             )
 
-        dataset_experiment_name_path = dataset_experiments_root_path + "/" + run_instance.experiment_name
+        dataset_experiment_name_path = dataset_experiments_root_path + "/" + run_instance._experiment_name
         if not self._dataset_api.path_exists(dataset_experiment_name_path):
             self._dataset_api.mkdir(dataset_experiment_name_path)
 
