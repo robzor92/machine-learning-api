@@ -40,27 +40,24 @@ class ExperimentEngine:
     def _set_id(
         self, run_instance, dataset_experiment_path
     ):
-        # Set run id if not defined
-        if run_instance.run_folder is None:
-            current_highest_id = 0
-            for item in self._dataset_api.list(dataset_experiment_path, sort_by="NAME:desc")[
-                "items"
-            ]:
-                _, file_name = os.path.split(item["attributes"]["path"])
+        current_highest_id = 0
+        for item in self._dataset_api.list(dataset_experiment_path, sort_by="NAME:desc")[
+            "items"
+        ]:
+            _, file_name = os.path.split(item["attributes"]["path"])
+            try:
                 try:
-                    try:
-                        if '_' not in file_name:
-                            continue
-                        current_id = int(file_name.split('_')[1])
-                    except ValueError:
+                    if '_' not in file_name:
                         continue
-                    if current_id > current_highest_id:
-                        current_highest_id = current_id
-                except RestAPIError:
-                    pass
-            run_instance.run_folder = "run_" + str(current_highest_id + 1)
+                    current_id = int(file_name.split('_')[1])
+                except ValueError:
+                    continue
+                if current_id > current_highest_id:
+                    current_highest_id = current_id
+            except RestAPIError:
+                pass
             
-        run_instance.id = run_instance.experiment_name + "_" + str(run_instance.run_folder)
+        run_instance.ml_id = run_instance._experiment_name + "_" + str("run_" + str(current_highest_id + 1))
 
         return run_instance
 

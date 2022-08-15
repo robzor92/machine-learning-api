@@ -86,7 +86,6 @@ class Run:
     def to_dict(self):
         run = {
             "id": self._id,
-            "runFolder": self._run_folder,
             "experimentName": self._experiment_name,
         }
 
@@ -106,6 +105,15 @@ class Run:
     @id.setter
     def id(self, id):
         self._id = id
+
+    @property
+    def ml_id(self):
+        """id of the model."""
+        return self._ml_id
+
+    @ml_id.setter
+    def ml_id(self, ml_id):
+        self._ml_id = ml_id
 
     @property
     def started(self):
@@ -182,10 +190,10 @@ class Run:
     @property
     def path(self):
         """path of the model with version folder omitted. Resolves to /Projects/{project_name}/Models/{name}"""
-        return "/Projects/{}/Experiments/{}/{}".format(self._project_name, self._experiment_name, str(self.run_folder))
+        return "/Projects/{}/Experiments/{}/{}".format(self._project_name, self._experiment_name, self.ml_id[len((self._experiment_name)+1):])
 
     def __repr__(self):
-        return f"Run(experiment: {self._experiment_name!r}, folder: {self.run_folder!r})"
+        return f"Run(experiment: {self._experiment_name!r})"
 
     def get_url(self):
         path = (
