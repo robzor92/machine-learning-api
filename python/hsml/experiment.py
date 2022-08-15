@@ -33,6 +33,7 @@ class Experiment:
         runs=None,
         description=None,
         creator=None,
+        project_name=None,
         type=None,
         items=None,
         href=None,
@@ -53,7 +54,7 @@ class Experiment:
 
     def start_run(self):
         """Start the run."""
-        run = Run(name=self.name)
+        run = Run(experiment_name=self.name)
         run = run._start_run(self)
         return run
 
@@ -69,14 +70,14 @@ class Experiment:
         self._experiment_engine.delete(self)
 
     @classmethod
-    def from_response_json(cls, json_dict):
+    def from_response_json(cls, json_dict, project_name):
         json_decamelized = humps.decamelize(json_dict)
         if "count" in json_decamelized:
             if json_decamelized["count"] == 0:
                 return []
-            return [cls(**model) for model in json_decamelized["items"]]
+            return [cls(**model, project_name=project_name) for model in json_decamelized["items"]]
         else:
-            return cls(**json_decamelized)
+            return cls(**json_decamelized, project_name=project_name)
 
     def update_from_response_json(self, json_dict):
         json_decamelized = humps.decamelize(json_dict)

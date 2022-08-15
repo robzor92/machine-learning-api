@@ -46,7 +46,7 @@ class ExperimentApi:
                 path_params,
                 headers=headers,
                 data=json.dumps({'name': name})
-            )
+            ), _client._project_name
         )
 
     def get(self, name):
@@ -67,7 +67,7 @@ class ExperimentApi:
         query_params = {"expand": "trainingdatasets"}
 
         experiment_json = _client._send_request("GET", path_params, query_params)
-        experiment_meta = experiment.Experiment.from_response_json(experiment_json)
+        experiment_meta = experiment.Experiment.from_response_json(experiment_json, _client._project_name)
 
         return experiment_meta
 
@@ -88,7 +88,7 @@ class ExperimentApi:
         ]
         query_params = {}
 
-        return experiment.Experiment.from_response_json(_client._send_request("GET", path_params, query_params))
+        return experiment.Experiment.from_response_json(_client._send_request("GET", path_params, query_params), _client._project_name)
 
     def delete(self, model_instance):
         """Delete the model and metadata.
