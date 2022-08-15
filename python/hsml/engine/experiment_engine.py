@@ -21,7 +21,7 @@ from hsml.client.exceptions import RestAPIError
 
 from hsml import client, util, constants
 
-from hsml.core import experiment_api, dataset_api
+from hsml.core import experiment_api, dataset_api, run_api
 
 from hsml.engine import local_engine, hopsworks_engine
 
@@ -29,6 +29,7 @@ from hsml.engine import local_engine, hopsworks_engine
 class ExperimentEngine:
     def __init__(self):
         self._experiment_api = experiment_api.ExperimentApi()
+        self._run_api = run_api.RunApi()
         self._dataset_api = dataset_api.DatasetApi()
 
         pydoop_spec = importlib.util.find_spec("pydoop")
@@ -106,10 +107,8 @@ class ExperimentEngine:
 
         self._engine.mkdir(run_instance.path)
 
-        run_query_params = {}
-
-        run_instance = self._experiment_api.put(
-            run_instance, run_query_params
+        run_instance = self._run_api.put(
+            run_instance
         )
 
         print("Run created, explore it at " + run_instance.get_url())

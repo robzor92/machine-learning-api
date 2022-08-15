@@ -23,7 +23,7 @@ class RunApi:
     def __init__(self):
         pass
 
-    def put(self, run_instance, query_params):
+    def put(self, run_instance):
         """Save experiment run to the experiment registry.
 
         :param run_instance: metadata object of experiment run to be saved
@@ -46,51 +46,10 @@ class RunApi:
                 "PUT",
                 path_params,
                 headers=headers,
-                query_params=query_params,
+                query_params={},
                 data=run_instance.json(),
             )
         )
-
-    def get(self, name):
-        """Get the metadata of an experiment given a name.
-
-        :param name: name of the experiment
-        :type name: str
-        :return: experiment metadata object
-        :rtype: Experiment
-        """
-        _client = client.get_instance()
-        path_params = [
-            "project",
-            _client._project_id,
-            "experiments",
-            str(name),
-        ]
-        query_params = {"expand": "trainingdatasets"}
-
-        model_json = _client._send_request("GET", path_params, query_params)
-        model_meta = experiment.Experiment.from_response_json(model_json)
-
-        return model_meta
-
-    def get_experiments(
-            self,
-    ):
-        """Get the metadata of models based on the name or optionally the best model given a metric and direction.
-
-        :return: model metadata object
-        :rtype: Model
-        """
-
-        _client = client.get_instance()
-        path_params = [
-            "project",
-            _client._project_id,
-            "experiments",
-        ]
-        query_params = {}
-
-        return experiment.Experiment.from_response_json(_client._send_request("GET", path_params, query_params))
 
     def delete(self, model_instance):
         """Delete the model and metadata.
