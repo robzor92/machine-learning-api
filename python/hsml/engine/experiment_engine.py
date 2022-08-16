@@ -107,7 +107,27 @@ class ExperimentEngine:
 
         self._engine.mkdir(run_instance.path)
 
-        run_configuration = {'type': 'runConfiguration', 'mlId': run_instance.ml_id, 'status': 'RUNNING'}
+        run_configuration = {'type': 'runConfiguration',
+                             'mlId': run_instance.ml_id,
+                             'status': 'RUNNING'}
+
+        run_instance = self._run_api.put(run_instance._experiment_name, run_configuration)
+
+        print("Run created, explore it at " + run_instance.get_url())
+
+        return run_instance
+
+    def end_run(self, run_instance):
+
+        _client = client.get_instance()
+
+        run_instance._project_name = _client._project_name
+
+        run_configuration = {'type': 'runConfiguration',
+                             'mlId': run_instance.ml_id,
+                             'status': 'FINISHED',
+                             'parameters': None,
+                             'metrics': None}
 
         run_instance = self._run_api.put(run_instance._experiment_name, run_configuration)
 
