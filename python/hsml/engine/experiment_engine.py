@@ -126,8 +126,8 @@ class ExperimentEngine:
         run_configuration = {'type': 'runConfiguration',
                              'mlId': run_instance.ml_id,
                              'status': 'FINISHED',
-                             'parameters': None,
-                             'metrics': None}
+                             'parameters': {'dropout': 0.5},
+                             'metrics': {'accuracy': 0.99}}
 
         run_instance = self._run_api.put(run_instance._experiment_name, run_configuration)
 
