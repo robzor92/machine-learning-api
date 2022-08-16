@@ -37,6 +37,9 @@ class Run:
         metrics=None,
         experiment_name=None,
         project_name=None,
+        type=None,
+        items=None,
+        href=None,
     ):
         self._id = id
         self._ml_id = ml_id
