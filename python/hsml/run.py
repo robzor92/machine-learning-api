@@ -30,7 +30,7 @@ class Run:
         started=None,
         finished=None,
         status=None,
-        creator=None,
+        user=None,
         environment=None,
         program=None,
         parameters=None,
@@ -46,7 +46,7 @@ class Run:
         self._started = started
         self._finished = finished
         self._status = status
-        self._creator = creator
+        self._user = user
         self._environment = environment
         self._program = program
         self._parameters = parameters
@@ -148,13 +148,13 @@ class Run:
         self._status = status
 
     @property
-    def creator(self):
+    def user(self):
         """status of the model."""
-        return self._creator
+        return self._user
 
-    @creator.setter
-    def creator(self, creator):
-        self._creator = creator
+    @user.setter
+    def user(self, user):
+        self._user = user
 
     @property
     def environment(self):
