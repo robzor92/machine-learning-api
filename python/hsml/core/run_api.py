@@ -14,7 +14,7 @@
 #   limitations under the License.
 #
 
-from hsml import client, experiment, tag
+from hsml import client, experiment, tag, run
 import json
 from typing import Union
 
@@ -23,7 +23,7 @@ class RunApi:
     def __init__(self):
         pass
 
-    def put(self, run_instance):
+    def put(self, experiment_name, run_configuration):
         """Save experiment run to the experiment registry.
 
         :param run_instance: metadata object of experiment run to be saved
@@ -36,19 +36,19 @@ class RunApi:
             "project",
             _client._project_id,
             "experiments",
-            str(run_instance._experiment_name),
+            experiment_name,
             "runs",
         ]
 
         headers = {"content-type": "application/json"}
-        return run_instance.update_from_response_json(
+        return run.Run.from_response_json(
             _client._send_request(
                 "PUT",
                 path_params,
                 headers=headers,
                 query_params={},
-                data=run_instance.json(),
-            )
+                data=json.dumps(run_configuration),
+            ), _client._project_name, experiment_name
         )
 
     def delete(self, model_instance):

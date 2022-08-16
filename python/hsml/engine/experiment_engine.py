@@ -107,9 +107,9 @@ class ExperimentEngine:
 
         self._engine.mkdir(run_instance.path)
 
-        run_instance = self._run_api.put(
-            run_instance
-        )
+        run_configuration = {'type': 'runConfiguration', 'mlId': run_instance.ml_id, 'status': 'RUNNING'}
+
+        run_instance = self._run_api.put(run_instance._experiment_name, run_configuration)
 
         print("Run created, explore it at " + run_instance.get_url())
 
