@@ -221,3 +221,8 @@ class Run:
             + "/runs"
         )
         return util.get_hostname_replaced_url(path)
+
+    def __enter__(self):
+        return self
+    def __exit__(self, type, value, traceback):
+        self.end_run()
