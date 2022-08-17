@@ -126,11 +126,11 @@ class ExperimentEngine:
         run_configuration = {'type': 'runConfiguration',
                              'mlId': run_instance.ml_id,
                              'status': 'FINISHED',
-                             'parameters': {'dropout': 0.5},
-                             'metrics': {'accuracy': 0.99}}
+                             'parameters': run_instance._logged_params,
+                             'metrics': run_instance._logged_metrics}
 
         run_instance = self._run_api.put(run_instance._experiment_name, run_configuration)
 
-        print("Run created, explore it at " + run_instance.get_url())
+        print("Run finished")
 
         return run_instance

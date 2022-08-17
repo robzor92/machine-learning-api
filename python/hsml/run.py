@@ -55,6 +55,9 @@ class Run:
         self._experiment_name = experiment_name
         self._project_name = project_name
 
+        self._logged_params = {}
+        self._logged_metrics = {}
+
         self._experiment_engine = experiment_engine.ExperimentEngine()
 
     def _start_run(self, experiment):
@@ -63,6 +66,15 @@ class Run:
     def end_run(self):
         """Persist this model including model files and metadata to the model registry."""
         self._experiment_engine.end_run(self)
+
+    def log_param(self, key: str, value: str):
+        """Persist this model including model files and metadata to the model registry."""
+        self._logged_params[key] = value
+
+    def log_metric(self, key: str, value):
+        """Persist this model including model files and metadata to the model registry."""
+        self._logged_metrics[key] = value
+
 
     @classmethod
     def from_response_json(cls, json_dict, project_name, experiment_name):
