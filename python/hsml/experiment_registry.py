@@ -18,6 +18,8 @@ import humps
 
 from hsml.core import experiment_api
 
+from hsml import experiment
+
 from hsml.engine import experiment_engine
 
 from hsml.client.exceptions import RestAPIError
@@ -74,7 +76,7 @@ class ExperimentRegistry:
                 name,
             )
         except RestAPIError as e:
-            return self._experiment_engine.create(name)
+            return self._experiment_engine.create(experiment.Experiment(name=name))
 
     @property
     def project_name(self):

@@ -23,7 +23,7 @@ class ExperimentApi:
     def __init__(self):
         pass
 
-    def put(self, name):
+    def put(self, experiment_instance):
         """Save experiment to the experiment registry.
 
         :param run_instance: metadata object of experiment run to be saved
@@ -45,7 +45,7 @@ class ExperimentApi:
                 "PUT",
                 path_params,
                 headers=headers,
-                data=json.dumps({'name': name})
+                data=json.dumps({'name': experiment_instance.name, 'description': experiment_instance.description})
             ), _client._project_name
         )
 

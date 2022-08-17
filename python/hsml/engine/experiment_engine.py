@@ -134,3 +134,13 @@ class ExperimentEngine:
         print("Run finished")
 
         return run_instance
+
+    def save(self, experiment_instance):
+
+        _client = client.get_instance()
+
+        experiment = self._experiment_api.put(
+            experiment_instance
+        )
+
+        return experiment

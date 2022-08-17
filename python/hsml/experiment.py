@@ -60,6 +60,9 @@ class Experiment:
         run = run._start_run(self)
         return run
 
+    def save(self):
+        return self._experiment_engine.save(self)
+
     def delete(self):
         """Delete the experiment and all recorded runs
 
