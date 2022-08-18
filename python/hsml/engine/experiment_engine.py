@@ -76,7 +76,7 @@ class ExperimentEngine:
         self._engine.mkdir("/Projects/{}/{}/{}".format(_client._project_name, constants.EXPERIMENTS_REGISTRY.EXPERIMENTS_DATASET, experiment.name))
 
         experiment = self._experiment_api.put(
-            experiment.name
+            experiment
         )
 
         print("Experiment created, explore it at " + experiment.get_url())
