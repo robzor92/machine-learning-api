@@ -62,7 +62,7 @@ class ExperimentEngine:
 
         return run_instance
 
-    def create(self, name):
+    def create(self, experiment):
 
         _client = client.get_instance()
 
@@ -73,10 +73,10 @@ class ExperimentEngine:
                 )
             )
 
-        self._engine.mkdir("/Projects/{}/{}/{}".format(_client._project_name, constants.EXPERIMENTS_REGISTRY.EXPERIMENTS_DATASET, name))
+        self._engine.mkdir("/Projects/{}/{}/{}".format(_client._project_name, constants.EXPERIMENTS_REGISTRY.EXPERIMENTS_DATASET, experiment.name))
 
         experiment = self._experiment_api.put(
-            name
+            experiment.name
         )
 
         print("Experiment created, explore it at " + experiment.get_url())
@@ -84,6 +84,10 @@ class ExperimentEngine:
         return experiment
 
     def start_run(self, run_instance, experiment_instance):
+
+        print(run_instance)
+        print(experiment_instance)
+
 
         _client = client.get_instance()
 
