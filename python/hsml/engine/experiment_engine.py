@@ -83,7 +83,7 @@ class ExperimentEngine:
 
         return experiment
 
-    def start_run(self, run_instance, experiment_path):
+    def start_run(self, run_instance, experiment_instance):
 
         _client = client.get_instance()
 
@@ -97,12 +97,12 @@ class ExperimentEngine:
                 )
             )
 
-        dataset_experiment_name_path = dataset_experiments_root_path + "/" + run_instance._experiment_name
+        dataset_experiment_name_path = dataset_experiments_root_path + "/" + experiment_instance.name
         if not self._dataset_api.path_exists(dataset_experiment_name_path):
             self._dataset_api.mkdir(dataset_experiment_name_path)
 
         run_instance = self._set_id(
-            run_instance, experiment_path
+            run_instance, experiment_instance.path
         )
 
         self._engine.mkdir(run_instance.path)
@@ -111,7 +111,7 @@ class ExperimentEngine:
                              'mlId': run_instance.ml_id,
                              'status': 'RUNNING'}
 
-        run_instance = self._run_api.put(run_instance._experiment_name, run_configuration)
+        run_instance = self._run_api.put(experiment_instance.name, run_configuration)
 
         print("Run created, explore it at " + run_instance.get_url())
 
