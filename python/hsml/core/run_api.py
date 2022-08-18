@@ -40,8 +40,6 @@ class RunApi:
             "runs",
         ]
 
-        print(run_configuration)
-
         headers = {"content-type": "application/json"}
         return run.Run.from_response_json(
             _client._send_request(
