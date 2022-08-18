@@ -36,7 +36,7 @@ class ExperimentApi:
             "project",
             _client._project_id,
             "experiments",
-            str(name),
+            str(experiment_instance.name),
         ]
 
         headers = {"content-type": "application/json"}
