@@ -39,10 +39,10 @@ class ExperimentEngine:
             self._engine = hopsworks_engine.HopsworksEngine()
 
     def _set_id(
-        self, run_instance, dataset_experiment_path
+        self, run_instance, experiment_instance
     ):
         current_highest_id = 0
-        for item in self._dataset_api.list(dataset_experiment_path, sort_by="NAME:desc")[
+        for item in self._dataset_api.list(experiment_instance.path, sort_by="NAME:desc")[
             "items"
         ]:
             _, file_name = os.path.split(item["attributes"]["path"])
@@ -58,7 +58,7 @@ class ExperimentEngine:
             except RestAPIError:
                 pass
             
-        run_instance.ml_id = run_instance._experiment_name + "_" + str("run_" + str(current_highest_id + 1))
+        run_instance.ml_id = experiment_instance.name + "_" + str("run_" + str(current_highest_id + 1))
 
         return run_instance
 
@@ -85,14 +85,11 @@ class ExperimentEngine:
 
     def start_run(self, run_instance, experiment_instance):
 
-        print(run_instance)
-        print(experiment_instance)
-
-
         _client = client.get_instance()
 
         dataset_experiments_root_path = constants.EXPERIMENTS_REGISTRY.EXPERIMENTS_DATASET
         run_instance._project_name = _client._project_name
+        run_instance._experiment_name = experiment_instance.name
 
         if not self._dataset_api.path_exists(dataset_experiments_root_path):
             raise AssertionError(
@@ -106,7 +103,7 @@ class ExperimentEngine:
             self._dataset_api.mkdir(dataset_experiment_name_path)
 
         run_instance = self._set_id(
-            run_instance, experiment_instance.path
+            run_instance, experiment_instance
         )
 
         self._engine.mkdir(run_instance.path)
