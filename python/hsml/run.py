@@ -36,6 +36,7 @@ class Run:
         program=None,
         parameters=None,
         metrics=None,
+        artifacts=None,
         experiment_name=None,
         project_name=None,
         type=None,
@@ -52,13 +53,10 @@ class Run:
         self._program = program
         self._parameters = parameters
         self._metrics = metrics
+        self._artifacts = artifacts
 
         self._experiment_name = experiment_name
         self._project_name = project_name
-
-        self._logged_params = {}
-        self._logged_metrics = {}
-        self._logged_artifacts = {}
 
         self._experiment_engine = experiment_engine.ExperimentEngine()
 
@@ -71,7 +69,7 @@ class Run:
 
     def set_param(self, key: str, value: str):
         """Persist this model including model files and metadata to the model registry."""
-        self._logged_params[key] = value
+        self._parameters[key] = value
 
     def set_params(self, params: dict):
         """Persist this model including model files and metadata to the model registry."""
@@ -80,7 +78,7 @@ class Run:
 
     def set_metric(self, key: str, value):
         """Persist this model including model files and metadata to the model registry."""
-        self._logged_metrics[key] = value
+        self._metrics[key] = value
 
     def set_metrics(self, metrics: dict):
         """Persist this model including model files and metadata to the model registry."""
@@ -89,7 +87,7 @@ class Run:
 
     def add_artifact(self, local_path: str):
         """Persist this model including model files and metadata to the model registry."""
-        self._logged_artifacts.add({'path': local_path, 'artifactType': type})
+        self._artifacts.add({'path': local_path, 'artifactType': type})
 
     def add_artifacts(self, local_dir: str):
         for file in os.listdir(local_dir):
@@ -225,6 +223,15 @@ class Run:
     @parameters.setter
     def parameters(self, metrics):
         self._metrics = metrics
+
+    @property
+    def artifacts(self):
+        """parameters of the model."""
+        return self._artifacts
+
+    @artifacts.setter
+    def artifacts(self, artifacts):
+        self._artifacts = artifacts
 
     @property
     def path(self):
