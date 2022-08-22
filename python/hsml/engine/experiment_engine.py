@@ -137,8 +137,8 @@ class ExperimentEngine:
 
     def upload_artifacts(self, run_instance):
         for artifact in run_instance.artifacts:
-            if os.path.isfile(artifact.path):
-                self._dataset_api.upload(artifact.path, run_instance.path)
+            if os.path.isfile(artifact['path']):
+                self._dataset_api.upload(artifact['path'], run_instance.path)
 
     def save(self, experiment_instance):
 
