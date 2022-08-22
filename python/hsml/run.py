@@ -61,10 +61,11 @@ class Run:
         self._experiment_engine = experiment_engine.ExperimentEngine()
 
     def _start_run(self, experiment):
-        self.parameters = {}
-        self.metrics = {}
-        self.artifacts = []
-        return self._experiment_engine.start_run(self, experiment)
+        run = self._experiment_engine.start_run(self, experiment)
+        run.parameters = {}
+        run.metrics = {}
+        run.artifacts = []
+        return run
 
     def end_run(self):
         """Persist this model including model files and metadata to the model registry."""

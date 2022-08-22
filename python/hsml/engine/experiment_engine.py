@@ -127,8 +127,9 @@ class ExperimentEngine:
         run_configuration = {'type': 'runConfiguration',
                              'mlId': run_instance.ml_id,
                              'status': 'FINISHED',
-                             'parameters': run_instance._logged_params,
-                             'metrics': run_instance._logged_metrics}
+                             'parameters': run_instance.params,
+                             'metrics': run_instance.metrics,
+                             'artifacts': run_instance.artifacts}
 
         self.upload_artifacts(run_instance)
 
