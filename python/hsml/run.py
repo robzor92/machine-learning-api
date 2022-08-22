@@ -17,6 +17,7 @@
 import json
 import humps
 import os
+import glob
 
 from hsml.engine import experiment_engine
 
@@ -89,16 +90,15 @@ class Run:
         for key in metrics:
             self.set_metric(metrics, metrics[key])
 
-    def add_artifact(self, local_path: str):
+    def add_artifact(self, local_path: str, upload_relative_path: str = None):
         """Persist this model including model files and metadata to the model registry."""
-        self._artifacts.append({'path': local_path, 'artifactType': 'ARTIFACT'})
+        self._artifacts.append({'path': local_path, 'artifactType': 'ARTIFACT', 'uploadRelativePath': upload_relative_path})
 
-    def add_artifacts(self, local_dir: str):
+    def add_artifacts(self, local_dir: str, upload_relative_path: str = None):
         for file in os.listdir(local_dir):
-            f = os.path.join(local_dir, file)
-            # checking if it is a file
-            if os.path.isfile(f):
-                self.add_artifact(file)
+            for filename in glob.iglob(local_dir + '/*', recursive=True):
+                if os.path.isfile(filename):
+                    self.add_artifact(file, upload_relative_path=upload_relative_path)
 
     @classmethod
     def from_response_json(cls, json_dict, project_name, experiment_name):

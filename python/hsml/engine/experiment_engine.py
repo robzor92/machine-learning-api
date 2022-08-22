@@ -138,7 +138,10 @@ class ExperimentEngine:
     def upload_artifacts(self, run_instance):
         for artifact in run_instance.artifacts:
             if os.path.isfile(artifact['path']):
-                self._dataset_api.upload(artifact['path'], run_instance.path)
+                if artifact['uploadRelativePath'] is not None:
+                    self._dataset_api.upload(artifact['path'], run_instance.path + "/" + artifact['uploadRelativePath'])
+                else:
+                    self._dataset_api.upload(artifact['path'], run_instance.path)
 
     def save(self, experiment_instance):
 
