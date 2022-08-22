@@ -95,10 +95,9 @@ class Run:
         self._artifacts.append({'path': local_path, 'artifactType': 'ARTIFACT', 'runPath': run_path})
 
     def add_artifacts(self, local_dir: str, run_path: str = None):
-        for file in os.listdir(local_dir):
-            for filename in glob.iglob(local_dir + '/*', recursive=True):
-                if os.path.isfile(filename):
-                    self.add_artifact(file, run_path=run_path)
+        for filename in glob.iglob(local_dir + '/**', recursive=True):
+            if os.path.isfile(filename):
+                self.add_artifact(filename, run_path=run_path)
 
     @classmethod
     def from_response_json(cls, json_dict, project_name, experiment_name):
