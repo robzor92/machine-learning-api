@@ -90,15 +90,15 @@ class Run:
         for key in metrics:
             self.set_metric(metrics, metrics[key])
 
-    def add_artifact(self, local_path: str, upload_relative_path: str = None):
+    def add_artifact(self, local_path: str, run_path: str = None):
         """Persist this model including model files and metadata to the model registry."""
-        self._artifacts.append({'path': local_path, 'artifactType': 'ARTIFACT', 'uploadRelativePath': upload_relative_path})
+        self._artifacts.append({'path': local_path, 'artifactType': 'ARTIFACT', 'runPath': run_path})
 
-    def add_artifacts(self, local_dir: str, upload_relative_path: str = None):
+    def add_artifacts(self, local_dir: str, run_path: str = None):
         for file in os.listdir(local_dir):
             for filename in glob.iglob(local_dir + '/*', recursive=True):
                 if os.path.isfile(filename):
-                    self.add_artifact(file, upload_relative_path=upload_relative_path)
+                    self.add_artifact(file, run_path=run_path)
 
     @classmethod
     def from_response_json(cls, json_dict, project_name, experiment_name):
