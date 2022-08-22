@@ -130,7 +130,14 @@ class ExperimentEngine:
                              'parameters': run_instance._logged_params,
                              'metrics': run_instance._logged_metrics}
 
+        self.upload_artifacts(run_instance)
+
         return self._run_api.put(run_instance._experiment_name, run_configuration)
+
+    def upload_artifacts(self, run_instance):
+        for artifact in run_instance.artifacts:
+            if os.path.isfile(artifact.path):
+                self._dataset_api.upload(artifact.path, run_instance.path)
 
     def save(self, experiment_instance):
 
