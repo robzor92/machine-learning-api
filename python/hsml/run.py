@@ -16,6 +16,7 @@
 
 import json
 import humps
+import os
 
 from hsml.engine import experiment_engine
 
@@ -57,6 +58,7 @@ class Run:
 
         self._logged_params = {}
         self._logged_metrics = {}
+        self._logged_artifacts = {}
 
         self._experiment_engine = experiment_engine.ExperimentEngine()
 
@@ -65,16 +67,36 @@ class Run:
 
     def end_run(self):
         """Persist this model including model files and metadata to the model registry."""
-        self._experiment_engine.end_run(self)
+        return self._experiment_engine.end_run(self)
 
-    def log_param(self, key: str, value: str):
+    def set_param(self, key: str, value: str):
         """Persist this model including model files and metadata to the model registry."""
         self._logged_params[key] = value
 
-    def log_metric(self, key: str, value):
+    def set_params(self, params: dict):
+        """Persist this model including model files and metadata to the model registry."""
+        for key in params:
+            self.set_param(params, params[key])
+
+    def set_metric(self, key: str, value):
         """Persist this model including model files and metadata to the model registry."""
         self._logged_metrics[key] = value
 
+    def set_metrics(self, metrics: dict):
+        """Persist this model including model files and metadata to the model registry."""
+        for key in metrics:
+            self.log_metric(metrics, metrics[key])
+
+    def add_artifact(self, local_path: str):
+        """Persist this model including model files and metadata to the model registry."""
+        self._logged_artifacts.add({'path': local_path, 'artifactType': type})
+
+    def add_artifacts(self, local_dir: str):
+        for file in os.listdir(local_dir):
+            f = os.path.join(local_dir, file)
+            # checking if it is a file
+            if os.path.isfile(f):
+                self.add_artifact(file)
 
     @classmethod
     def from_response_json(cls, json_dict, project_name, experiment_name):

@@ -130,7 +130,7 @@ class ExperimentEngine:
                              'parameters': run_instance._logged_params,
                              'metrics': run_instance._logged_metrics}
 
-        run_instance = self._run_api.put(run_instance._experiment_name, run_configuration)
+        return self._run_api.put(run_instance._experiment_name, run_configuration)
 
     def save(self, experiment_instance):
 
