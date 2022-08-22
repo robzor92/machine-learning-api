@@ -140,6 +140,7 @@ class ExperimentEngine:
             if os.path.isfile(artifact['path']):
                 if artifact['runPath'] is not None:
                     self._dataset_api.upload(artifact['path'], run_instance.path + "/" + artifact['runPath'])
+                    artifact['path'] = artifact['runPath'] + '/' + artifact['path']
                 else:
                     self._dataset_api.upload(artifact['path'], run_instance.path)
 
