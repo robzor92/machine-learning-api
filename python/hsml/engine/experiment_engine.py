@@ -127,7 +127,7 @@ class ExperimentEngine:
         run_configuration = {'type': 'runConfiguration',
                              'mlId': run_instance.ml_id,
                              'status': 'FINISHED',
-                             'parameters': run_instance.params,
+                             'parameters': run_instance.parameters,
                              'metrics': run_instance.metrics,
                              'artifacts': run_instance.artifacts}
 
