@@ -61,6 +61,9 @@ class Run:
         self._experiment_engine = experiment_engine.ExperimentEngine()
 
     def _start_run(self, experiment):
+        self.parameters = {}
+        self.metrics = {}
+        self.artifacts = []
         return self._experiment_engine.start_run(self, experiment)
 
     def end_run(self):
@@ -87,7 +90,7 @@ class Run:
 
     def add_artifact(self, local_path: str):
         """Persist this model including model files and metadata to the model registry."""
-        self._artifacts.add({'path': local_path, 'artifactType': type})
+        self._artifacts.append({'path': local_path, 'artifactType': type})
 
     def add_artifacts(self, local_dir: str):
         for file in os.listdir(local_dir):
@@ -220,8 +223,8 @@ class Run:
         """parameters of the model."""
         return self._metrics
 
-    @parameters.setter
-    def parameters(self, metrics):
+    @metrics.setter
+    def metrics(self, metrics):
         self._metrics = metrics
 
     @property
