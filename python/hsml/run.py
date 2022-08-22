@@ -91,7 +91,7 @@ class Run:
 
     def add_artifact(self, local_path: str):
         """Persist this model including model files and metadata to the model registry."""
-        self._artifacts.append({'path': local_path, 'artifactType': type})
+        self._artifacts.append({'path': local_path, 'artifactType': 'ARTIFACT'})
 
     def add_artifacts(self, local_dir: str):
         for file in os.listdir(local_dir):
