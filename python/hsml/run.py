@@ -85,7 +85,7 @@ class Run:
     def set_metrics(self, metrics: dict):
         """Persist this model including model files and metadata to the model registry."""
         for key in metrics:
-            self.log_metric(metrics, metrics[key])
+            self.set_metric(metrics, metrics[key])
 
     def add_artifact(self, local_path: str):
         """Persist this model including model files and metadata to the model registry."""
