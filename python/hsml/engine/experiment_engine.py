@@ -140,9 +140,9 @@ class ExperimentEngine:
 
         self.upload_artifacts(run_instance)
 
-        self._dataset_api.upload(run_instance.program, run_instance.path + "/" + run_instance.program.rpartition('/')[2])
+        self._dataset_api.upload(run_instance.program, run_instance.path)
 
-        self._dataset_api.upload(run_instance.environment, run_instance.path + "/" + run_instance.environment.rpartition('/')[2])
+        self._dataset_api.upload(run_instance.environment, run_instance.path)
 
         return self._run_api.put(run_instance._experiment_name, run_configuration)
 
