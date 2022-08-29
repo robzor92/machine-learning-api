@@ -19,6 +19,8 @@ import os
 
 from hsml.client.exceptions import RestAPIError
 
+from hsml.client.hopsworks.external import Client
+
 from hsml import client, util, constants
 
 from hsml.core import experiment_api, dataset_api, run_api
@@ -110,7 +112,10 @@ class ExperimentEngine:
 
         run_configuration = {'type': 'runConfiguration',
                              'mlId': run_instance.ml_id,
-                             'status': 'RUNNING'}
+                             'status': 'RUNNING',
+                             'external': type(_client) == Client,
+                             'program': run_instance.program,
+                             'environment': run_instance.environment}
 
         run_instance = self._run_api.put(experiment_instance.name, run_configuration)
 
@@ -124,12 +129,16 @@ class ExperimentEngine:
 
         run_instance._project_name = _client._project_name
 
+
         run_configuration = {'type': 'runConfiguration',
                              'mlId': run_instance.ml_id,
                              'status': 'FINISHED',
                              'parameters': run_instance.parameters,
                              'metrics': run_instance.metrics,
-                             'artifacts': run_instance.artifacts}
+                             'artifacts': run_instance.artifacts,
+                             'external': type(_client) == Client,
+                             'program': run_instance.program,
+                             'environment': run_instance.environment}
 
         self.upload_artifacts(run_instance)
 

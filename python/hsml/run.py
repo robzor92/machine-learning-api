@@ -72,6 +72,14 @@ class Run:
         """Persist this model including model files and metadata to the model registry."""
         return self._experiment_engine.end_run(self)
 
+    def set_program(self, path: str):
+        """Persist this model including model files and metadata to the model registry."""
+        self._program = path
+
+    def set_environment(self, path: str):
+        """Persist this model including model files and metadata to the model registry."""
+        self._environment = path
+
     def set_param(self, key: str, value: str):
         """Persist this model including model files and metadata to the model registry."""
         self._parameters[key] = value
