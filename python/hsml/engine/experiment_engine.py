@@ -113,9 +113,7 @@ class ExperimentEngine:
         run_configuration = {'type': 'runConfiguration',
                              'mlId': run_instance.ml_id,
                              'status': 'RUNNING',
-                             'external': type(_client) == Client,
-                             'program': run_instance.program,
-                             'environment': run_instance.environment}
+                             'external': type(_client) == Client}
 
         run_instance = self._run_api.put(experiment_instance.name, run_configuration)
 
@@ -141,6 +139,10 @@ class ExperimentEngine:
                              'environment': run_instance.environment}
 
         self.upload_artifacts(run_instance)
+
+        self._dataset_api.upload(run_instance.program, run_instance.path + "/" + run_instance.program.rpartition('/')[2])
+
+        self._dataset_api.upload(run_instance.environment, run_instance.path + "/" + run_instance.environment.rpartition('/')[2])
 
         return self._run_api.put(run_instance._experiment_name, run_configuration)
 
