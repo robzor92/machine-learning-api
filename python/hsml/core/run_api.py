@@ -23,7 +23,7 @@ class RunApi:
     def __init__(self):
         pass
 
-    def put(self, experiment_name, run_configuration):
+    def put(self, experiment_name, run_configuration, ml_id):
         """Save experiment run to the experiment registry.
 
         :param run_instance: metadata object of experiment run to be saved
@@ -38,6 +38,7 @@ class RunApi:
             "experiments",
             experiment_name,
             "runs",
+            str(ml_id),
         ]
 
         headers = {"content-type": "application/json"}

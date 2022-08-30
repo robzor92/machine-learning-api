@@ -129,7 +129,6 @@ class ExperimentEngine:
 
 
         run_configuration = {'type': 'runConfiguration',
-                             'mlId': run_instance.ml_id,
                              'status': 'FINISHED',
                              'parameters': run_instance.parameters,
                              'metrics': run_instance.metrics,
@@ -144,7 +143,7 @@ class ExperimentEngine:
 
         self._dataset_api.upload(run_instance.environment, run_instance.path)
 
-        return self._run_api.put(run_instance._experiment_name, run_configuration)
+        return self._run_api.put(run_instance._experiment_name, run_configuration, run_instance.ml_id)
 
     def upload_artifacts(self, run_instance):
         for artifact in run_instance.artifacts:
