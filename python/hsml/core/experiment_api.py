@@ -64,7 +64,7 @@ class ExperimentApi:
             "experiments",
             str(name),
         ]
-        query_params = {"expand": "trainingdatasets"}
+        query_params = {}
 
         experiment_json = _client._send_request("GET", path_params, query_params)
         experiment_meta = experiment.Experiment.from_response_json(experiment_json, _client._project_name)
