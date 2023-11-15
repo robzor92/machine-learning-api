@@ -34,13 +34,13 @@ class HopsworksEngine:
         self._native_hdfs_api.rm(remote_path)
 
     def upload(self, local_path: str, remote_path: str):
-        local_path = self._get_abs_path(local_path)
+        local_path = self._get_real_path(local_path)
         remote_path = self._prepend_project_path(remote_path)
         self._native_hdfs_api.upload(local_path, remote_path)
         self._native_hdfs_api.chmod(remote_path, "ug+rwx")
 
     def download(self, remote_path: str, local_path: str):
-        local_path = self._get_abs_path(local_path)
+        local_path = self._get_real_path(local_path)
         remote_path = self._prepend_project_path(remote_path)
         self._native_hdfs_api.download(remote_path, local_path)
 
@@ -55,8 +55,8 @@ class HopsworksEngine:
         destination_path = self._prepend_project_path(destination_path)
         self._native_hdfs_api.move(source_path, destination_path)
 
-    def _get_abs_path(self, local_path: str):
-        return local_path if os.path.isabs(local_path) else os.path.abspath(local_path)
+    def _get_real_path(self, local_path: str):
+        return os.path.realpath(local_path)
 
     def _prepend_project_path(self, remote_path: str):
         if not remote_path.startswith("/Projects/"):
