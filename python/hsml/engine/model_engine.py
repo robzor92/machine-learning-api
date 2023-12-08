@@ -116,7 +116,7 @@ class ModelEngine:
 
         model_path_resp = self._dataset_api.get(from_hdfs_model_path)
         model_path_attr = model_path_resp["attributes"]
-        if model_path_resp["datasetType"] == "DATASET":
+        if model_path_resp["datasetType"] == "DATASET": # This is needed to avoid a user exporting for example "Resources" from wiping the dataset
             raise AssertionError("It is disallowed to export a root dataset path."
                                  " Move the model to a sub-folder and try again.")
         elif model_path_attr.get("dir", False):
