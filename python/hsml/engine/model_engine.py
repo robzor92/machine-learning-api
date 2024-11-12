@@ -218,22 +218,11 @@ class ModelEngine:
                 remote_base_path = root.replace(
                     from_local_model_path, to_model_version_path
                 ).replace(os.sep, '/')
-                print(dirs)
-                print(files)
                 for d_name in dirs:
-                    print("dir start")
-                    print(d_name)
-                    print(remote_base_path)
-                    print("dir end")
                     self._engine.mkdir(remote_base_path + "/" + d_name)
                     n_dirs += 1
                     update_upload_progress(n_dirs, n_files)
                 for f_name in files:
-                    print("file start")
-                    print(f_name)
-                    print(root)
-                    print(remote_base_path)
-                    print("file end")
                     self._engine.upload(
                         root + "/" + f_name,
                         remote_base_path,
